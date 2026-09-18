@@ -44,10 +44,10 @@ void main(void)
   
    
 
-  P1IE |= BIT3;     // initialisation de l'interruption
-  P1IES |= BIT3;    // interruption sur front descendant
+  P2IE |= (BIT3|BIT0);     // initialisation de l'interruption
+  P2IES |= (BIT3|BIT0);    // interruption sur front descendant
                     // donc appui car bouton connecte a la masse
-  P1IFG &= ~(BIT2); // RAZ flag d’interruption
+  P2IFG &= ~(BIT0|BIT3); // RAZ flag d’interruption
   __enable_interrupt();
   while (1);// boucle infinie
 }
