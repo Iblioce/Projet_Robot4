@@ -11,16 +11,16 @@ void config_timer1(void)
   TA1CCTL1 |= OUTMOD_7;// activation du signal      
 }
 
-#pragma vector=TIMER0_A1_VECTOR
-__interrupt void TIMER0_ISR(void)
-{
-    if ((TA0CTL & TAIFG) == TAIFG)
-    {
-        P1OUT &= ~(BIT2);
-        TA0CTL &= MC_0; //arret du comptage
-        TA0CTL &= ~(TAIFG);
-    }
-}
+// #pragma vector=TIMER0_A1_VECTOR
+// __interrupt void TIMER0_ISR(void)
+// {
+//     if ((TA0CTL & TAIFG) == TAIFG)
+//     {
+//         P1OUT &= ~(BIT2);
+//         TA0CTL &= MC_0; //arret du comptage
+//         TA0CTL &= ~(TAIFG);
+//     }
+// }
 
 
 void main(void)
@@ -46,7 +46,6 @@ void main(void)
 
   P2IE |= (BIT3|BIT0);     // initialisation de l'interruption
   P2IES |= (BIT3|BIT0);    // interruption sur front descendant
-                    // donc appui car bouton connecte a la masse
   P2IFG &= ~(BIT0|BIT3); // RAZ flag d’interruption
   __enable_interrupt();
   while (1);// boucle infinie
