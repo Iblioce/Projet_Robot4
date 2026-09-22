@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Projet_GROUPE_4",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "Projet_GROUPE_4",
+                "resourceId": "/Projet_GROUPE_4"
+            }
+        }
+    ]
+}
