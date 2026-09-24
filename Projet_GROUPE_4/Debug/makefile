@@ -11,6 +11,8 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
+"./ADC/ADC.obj" \
+"./Afficheur/Afficheur.obj" \
 "../lnk_msp430g2553.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -23,7 +25,11 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include ADC/subdir_vars.mk
+-include Afficheur/subdir_vars.mk
 -include subdir_rules.mk
+-include ADC/subdir_rules.mk
+-include Afficheur/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -154,8 +160,8 @@ Projet_GROUPE_4.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" 
-	-$(RM) "main.d" 
+	-$(RM) "main.obj" "ADC\ADC.obj" "Afficheur\Afficheur.obj" 
+	-$(RM) "main.d" "ADC\ADC.d" "Afficheur\Afficheur.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

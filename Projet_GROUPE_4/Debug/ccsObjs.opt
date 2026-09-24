@@ -1,3 +1,5 @@
 "./main.obj"
+"./ADC/ADC.obj"
+"./Afficheur/Afficheur.obj"
 "../lnk_msp430g2553.cmd"
 -llibc.a

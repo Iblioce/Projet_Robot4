@@ -1,4 +1,6 @@
 #include <msp430.h>
+#include "Afficheur/Afficheur.h"
+#include "ADC/ADC.h"
 
 // unsigned int memo_capt=0;
 // unsigned int capt;
@@ -87,12 +89,23 @@ int max = 0;
   if(compteur_0 > compteur_1){
     max = compteur_0;
     min = compteur_1;
+    TA1CCR1 = 1000;
+    TA1CCR2 = TA1CCR1*(max/min);
   }else{
     max = compteur_1;
     min = compteur_0;
+    TA1CCR2 = 1000;
+    TA1CCR1 = TA1CCR2*(max/min);
   }
-  TA1CCR2 = 1000;
-  TA1CCR2 = TA1CCR2*(max/min);
+  
+}
+
+int detecter_obstacle(){
+  Aff_Efface();
+  ADC_init();
+  ADC_Demarrer_conversion(1);
+  Aff_valeur(convert_Hex_Dec(ADC_Lire_resultat()));
+  __delay_cycles(10000);
 }
 
 int main(void){
@@ -101,6 +114,10 @@ int main(void){
   BCSCTL1 = CALBC1_1MHZ;          // frequence d’horloge 1MHz
   DCOCTL = CALDCO_1MHZ;
   //config
+  
+  Aff_Init();
+  // detecteur obstacle
+
   /* P2.2 et P2.4 en mode timer
      P2.0, P2.1, P2.3, P2.5  en mode I/O
   */
@@ -120,7 +137,11 @@ int main(void){
   P2IFG &= ~(BIT0|BIT3);
   config_signal();
   tourner_droite();
-  init_vitesse();
+  //init_vitesse();
   __enable_interrupt();
-  while(1);
+  while(1)
+  {
+    detecter_obstacle();
+    
+  }
 }

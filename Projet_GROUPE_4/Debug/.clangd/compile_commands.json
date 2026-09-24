@@ -1,7 +1,17 @@
 [
    {
-      "directory" : "C:/Users/76244358/workspace_ccstheia/Projet_GROUPE_4/Debug",
-      "command"   : "clang++ -I\"C:/ti/ccs2020/ccs/ccs_base/msp430/include\" -I\"C:/Users/76244358/workspace_ccstheia/Projet_GROUPE_4\" -I\"C:/ti/ccs2020/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include\" -D__MSP430G2553__ -xc",
-      "file"      : "C:/Users/76244358/workspace_ccstheia/Projet_GROUPE_4/main.c"
+      "directory" : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/Debug",
+      "command"   : "clang++ -I\"C:/ti/ccs2020/ccs/ccs_base/msp430/include\" -I\"C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4\" -I\"C:/ti/ccs2020/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include\" -D__MSP430G2553__ -xc",
+      "file"      : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/main.c"
+   },
+   {
+      "directory" : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/Debug",
+      "command"   : "clang++ -I\"C:/ti/ccs2020/ccs/ccs_base/msp430/include\" -I\"C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4\" -I\"C:/ti/ccs2020/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include\" -D__MSP430G2553__ -xc",
+      "file"      : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/ADC/ADC.c"
+   },
+   {
+      "directory" : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/Debug",
+      "command"   : "clang++ -I\"C:/ti/ccs2020/ccs/ccs_base/msp430/include\" -I\"C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4\" -I\"C:/ti/ccs2020/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include\" -D__MSP430G2553__ -xc",
+      "file"      : "C:/Users/71779322/Documents/GitHub/Projet_Robot4/Projet_GROUPE_4/Afficheur/Afficheur.c"
    }
 ]
