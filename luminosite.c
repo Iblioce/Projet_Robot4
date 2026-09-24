@@ -1,6 +1,7 @@
 //Luminosité ambiante
 
 void luminosite(){
+  Aff_init();
   ADC_init();
   Init_USI_SPI();
 
