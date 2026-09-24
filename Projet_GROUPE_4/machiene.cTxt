@@ -3,29 +3,14 @@
 
 int compteur_0 = 0;
 int compteur_1 = 0;
-int compteur_angle = 0;
 
 typedef enum { AVANCER, TOURNER, NB_ETATS} ETAT;
 typedef enum { CAPT_ON, CAPT_OFF, NB_EVENTS} EVENT;
 
 typedef void (*Action)(void);
 
-int detecter_obstacle(){
-  ADC_init();
-  ADC_Demarrer_conversion(3);
-  int res = ADC_Lire_resultat();
-  Aff_valeur(convert_Hex_Dec(res));
-  __delay_cycles(20000);
-  Aff_Efface();
-  return res;
-}
-
-int get_capt(){
-  if (detecter_obstacle()>500){
-    return 1;
-  }else{
-    return 0;
-  }
+void get_capt(){
+    detecter_obstacle();
 }
 
  void arreter(){
@@ -71,16 +56,17 @@ EVENT get_event(){
 typedef struct {
  ETAT etat_suivant; 
  Action action;  
+
  }Transition;
 
 Transition tab_transition [NB_ETATS][NB_EVENTS]= {
   [AVANCER] = {
-    [CAPT_OFF] = {AVANCER, avancer},
-    [CAPT_ON] = {TOURNER, tourner_gauche}
+    [CAPT_ON] = {AVANCER, avancer},
+    [CAPT_OFF] = {TOURNER, tourner_gauche}
   },
   [TOURNER] = {
-    [CAPT_OFF] = {AVANCER, avancer},
-    [CAPT_ON] = {TOURNER, tourner_gauche}
+    [CAPT_ON] = {AVANCER, avancer},
+    [CAPT_OFF] = {TOURNER, tourner_gauche}
   }
 };
 
@@ -99,9 +85,9 @@ __interrupt void ma_interrupt_opto_0(void)
   }
 
 }
-
 void config_signal(){
 
+  
   TA1CTL = 0| (TASSEL_2 | ID_1); // source SMCLK, prédiv
   TA1CTL |= TAIE; // autorisation interruption TAIE
   TA1CTL |= MC_1; // comptage en mode up  
@@ -127,23 +113,35 @@ void init_vitesse(){
 }
 
 void ajuster_vitesse(){
+int min = 0;
+int max = 0;
   if(compteur_0 > compteur_1){
+    max = compteur_0;
+    min = compteur_1;
     TA1CCR1 = 1000;
-    TA1CCR2 = TA1CCR1*(compteur_0/compteur_1);
+    TA1CCR2 = TA1CCR1*(max/min);
   }else{
+    max = compteur_1;
+    min = compteur_0;
     TA1CCR2 = 1000;
-    TA1CCR1 = TA1CCR2*(compteur_1/compteur_0);
+    TA1CCR1 = TA1CCR2*(max/min);
   }
   
 }
 
+int detecter_obstacle(){
+  Aff_Efface();
+  ADC_init();
+  ADC_Demarrer_conversion(3);
+  res = ADC_Lire_resultat();
+  Aff_valeur(convert_Hex_Dec(res));
+  __delay_cycles(10000);
+  return res
+}
 
 int main(void){
   WDTCTL = WDTPW +WDTHOLD; // desactivation Watch Dog Timer
   //config
-
-  
-
   /* P2.2 et P2.4 en mode timer
      P2.0, P2.1, P2.3, P2.5  en mode I/O
   */
@@ -174,15 +172,13 @@ int main(void){
   ETAT etat = AVANCER;
   EVENT event;
   Transition trs;
-  Aff_Init();
-  //__enable_interrupt();
+
   while(1){
     event = get_event();
     trs = tab_transition[etat][event];
     trs.action();
     etat=trs.etat_suivant;
-    //ajuster_vitesse();
   }
 
-   
+  // __enable_interrupt();
 }
