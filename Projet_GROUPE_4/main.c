@@ -136,12 +136,11 @@ int main(void){
   //avancer();
   P2IFG &= ~(BIT0|BIT3);
   config_signal();
-  tourner_droite();
+  //tourner_droite();
   //init_vitesse();
   __enable_interrupt();
   while(1)
   {
     detecter_obstacle();
-    
   }
 }
