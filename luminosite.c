@@ -40,3 +40,55 @@ void config_signal(){
   luminosite();
 
 }
+
+int main(void){
+  WDTCTL = WDTPW +WDTHOLD; // desactivation Watch Dog Timer
+  //config
+  /* P2.2 et P2.4 en mode timer
+     P2.0, P2.1, P2.3, P2.5  en mode I/O
+  */
+
+  BCSCTL1 = CALBC1_1MHZ;          // frequence d’horloge 1MHz
+  DCOCTL = CALDCO_1MHZ;
+
+  P2SEL &= (BIT0|BIT1|BIT3|BIT5); // mode I/O à 0
+  P2SEL |= (BIT2|BIT4); // mode timer à 1
+  P2SEL2 &= ~(BIT0|BIT1|BIT2|BIT3|BIT4|BIT5); // timer et I/O à 0
+
+  //Luminosité
+  P1SEL &= ~(BIT0|BIT6);
+  P1SEL2 &= ~(BIT0|BIT6);
+
+  //Directions : 0 entree et 1 sortie
+  P2DIR &= ~(BIT0|BIT3); // entrees à 0
+  P2DIR |= (BIT1|BIT2|BIT4|BIT5); // sorties à 1
+  P1DIR |= (BIT0|BIT6); // sortie des LEDs
+
+  // Gestion des Interruptions
+  P2IE |= (BIT0|BIT3);
+  P2IES |=(BIT0|BIT3);
+
+  P2OUT &= ~(BIT5);
+  P2OUT |= BIT1;
+
+  P2IFG &= ~(BIT0|BIT3);
+
+ 
+  config_signal();
+
+  // Table de transition
+  ETAT etat = AVANCER;
+  EVENT event;
+  Transition trs;
+
+
+  while(1){
+    event = get_event();
+    trs = tab_transition[etat][event];
+    trs.action();
+    etat=trs.etat_suivant;
+  }
+
+  // __enable_interrupt();
+}
+
