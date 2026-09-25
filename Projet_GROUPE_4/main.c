@@ -163,8 +163,7 @@ int main(void){
   P2IE |= (BIT0|BIT3);
   P2IES |=(BIT0|BIT3);
 
-  P2OUT &= ~(BIT5);
-  P2OUT |= BIT1;
+  avancer();
 
   P2IFG &= ~(BIT0|BIT3);
 
