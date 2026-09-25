@@ -45,6 +45,9 @@ void init_vitesse(){
 void avancer(){
   P2OUT &= ~(BIT1);
   P2OUT |= BIT5;
+  __delay_cycle(3000000);
+  TA1CCR2 = 0;
+  TA1CCR1 = 0;
 }
 
 void reculer(){
@@ -84,11 +87,11 @@ typedef struct {
 
 Transition tab_transition [NB_ETATS][NB_EVENTS]= {
   [AVANCER] = {
-    [CAPT_OFF] = {AVANCER, init_vitesse},
+    [CAPT_OFF] = {AVANCER, avancer},
     [CAPT_ON] = {ARRET, arreter}
   },
   [ARRET] = {
-    [CAPT_OFF] = {AVANCER, init_vitesse},
+    [CAPT_OFF] = {AVANCER, avancer},
     [CAPT_ON] = {ARRET, arreter}
   }
 };
