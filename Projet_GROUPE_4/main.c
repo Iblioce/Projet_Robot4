@@ -164,7 +164,6 @@ int main(void){
   P2IES |=(BIT0|BIT3);
 
   avancer();
-
   P2IFG &= ~(BIT0|BIT3);
 
   config_signal();
